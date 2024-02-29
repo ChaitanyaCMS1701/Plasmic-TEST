@@ -1,0 +1,44 @@
+.root:global(.__wab_instance) {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 100%;
+  object-fit: cover;
+  background: #000000;
+  position: relative;
+  padding: 16px;
+}
+.link {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0px;
+}
+.img__memmJ {
+  object-fit: cover;
+  height: 40px;
+}
+.img__memmJ > picture > img {
+  object-fit: cover;
+}
+.img__hY232 {
+  object-fit: cover;
+}
+.img__hY232 > picture > img {
+  object-fit: cover;
+}
+.img___0A31O {
+  object-fit: cover;
+}
+.img___0A31O > picture > img {
+  object-fit: cover;
+}
