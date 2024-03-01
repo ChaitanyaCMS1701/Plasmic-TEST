@@ -10,7 +10,9 @@
 // Component: GyNHfM4sC7dg
 import * as React from "react";
 import {
+  PlasmicDataSourceContextProvider as PlasmicDataSourceContextProvider__,
   PlasmicImg as PlasmicImg__,
+  PlasmicPageGuard as PlasmicPageGuard__,
   classNames,
   createPlasmicElementProxy,
   deriveRenderOpts,
@@ -20,6 +22,8 @@ import {
   useDollarState
 } from "@plasmicapp/react-web";
 import { useDataEnv } from "@plasmicapp/react-web/lib/host";
+import * as plasmicAuth from "@plasmicapp/react-web/lib/auth";
+import { usePlasmicDataSourceContext } from "@plasmicapp/data-sources-context";
 import CartComponent3 from "../../CartComponent3"; // plasmic-import: DmT0Nv4lo2K2/component
 import Button from "../../Button"; // plasmic-import: Humveg51WdE0/component
 import "@plasmicapp/react-web/lib/plasmic.css";
@@ -31,13 +35,22 @@ createPlasmicElementProxy;
 
 export const PlasmicCart__VariantProps = new Array();
 
-export const PlasmicCart__ArgProps = new Array();
+export const PlasmicCart__ArgProps = new Array("test");
 
 const $$ = {};
 
 function PlasmicCart__RenderFunc(props) {
   const { variants, overrides, forNode } = props;
-  const args = React.useMemo(() => Object.assign({}, props.args), [props.args]);
+  const args = React.useMemo(
+    () =>
+      Object.assign(
+        {
+          test: `/cart-2`
+        },
+        props.args
+      ),
+    [props.args]
+  );
   const $props = {
     ...args,
     ...variants
@@ -237,9 +250,57 @@ function PlasmicCart__RenderFunc(props) {
               data-plasmic-override={overrides.link}
               className={classNames(projectcss.all, projectcss.a, sty.link)}
               href={`/cart-2`}
+              onClick={async event => {
+                const $steps = {};
+                $steps["updateCart"] = true
+                  ? (() => {
+                      const actionArgs = {
+                        variable: {
+                          objRoot: $state,
+                          variablePath: ["cart"]
+                        },
+                        operation: 0
+                      };
+                      return (({
+                        variable,
+                        value,
+                        startIndex,
+                        deleteCount
+                      }) => {
+                        if (!variable) {
+                          return;
+                        }
+                        const { objRoot, variablePath } = variable;
+                        $stateSet(objRoot, variablePath, value);
+                        return value;
+                      })?.apply(null, [actionArgs]);
+                    })()
+                  : undefined;
+                if (
+                  $steps["updateCart"] != null &&
+                  typeof $steps["updateCart"] === "object" &&
+                  typeof $steps["updateCart"].then === "function"
+                ) {
+                  $steps["updateCart"] = await $steps["updateCart"];
+                }
+              }}
+              props={(() => {
+                try {
+                  return $state.cartElement;
+                } catch (e) {
+                  if (
+                    e instanceof TypeError ||
+                    e?.plasmicType === "PlasmicUndefinedDataError"
+                  ) {
+                    return undefined;
+                  }
+                  throw e;
+                }
+              })()}
             >
               <Button
                 className={classNames("__wab_instance", sty.button__b7LKa)}
+                link={args.test}
               >
                 <div
                   className={classNames(
@@ -293,9 +354,46 @@ function makeNodeComponent(nodeName) {
   return func;
 }
 
+function withPlasmicPageGuard(WrappedComponent) {
+  const PageGuard = props => (
+    <PlasmicPageGuard__
+      minRole={null}
+      appId={"sMuK5QvKwWGrkw9DYJKXqS"}
+      authorizeEndpoint={"https://studio.plasmic.app/authorize"}
+      canTriggerLogin={true}
+    >
+      <WrappedComponent {...props} />
+    </PlasmicPageGuard__>
+  );
+
+  return PageGuard;
+}
+
+function withUsePlasmicAuth(WrappedComponent) {
+  const WithUsePlasmicAuthComponent = props => {
+    const dataSourceCtx = usePlasmicDataSourceContext() ?? {};
+    const { isUserLoading, user, token } = plasmicAuth.usePlasmicAuth({
+      appId: "sMuK5QvKwWGrkw9DYJKXqS"
+    });
+    return (
+      <PlasmicDataSourceContextProvider__
+        value={{
+          ...dataSourceCtx,
+          isUserLoading,
+          userAuthToken: token,
+          user
+        }}
+      >
+        <WrappedComponent {...props} />
+      </PlasmicDataSourceContextProvider__>
+    );
+  };
+  return WithUsePlasmicAuthComponent;
+}
+
 export const PlasmicCart = Object.assign(
   // Top-level PlasmicCart renders the root element
-  makeNodeComponent("root"),
+  withUsePlasmicAuth(withPlasmicPageGuard(makeNodeComponent("root"))),
   {
     // Helper components rendering sub-elements
     cartComponent3: makeNodeComponent("cartComponent3"),

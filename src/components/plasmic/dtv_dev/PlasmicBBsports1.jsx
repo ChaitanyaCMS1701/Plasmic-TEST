@@ -10,7 +10,9 @@
 // Component: 02c6mnCcd3D_
 import * as React from "react";
 import {
+  PlasmicDataSourceContextProvider as PlasmicDataSourceContextProvider__,
   PlasmicImg as PlasmicImg__,
+  PlasmicPageGuard as PlasmicPageGuard__,
   classNames,
   createPlasmicElementProxy,
   deriveRenderOpts,
@@ -27,6 +29,7 @@ import {
   DataCtxReader as DataCtxReader__,
   useDataEnv
 } from "@plasmicapp/react-web/lib/host";
+import * as plasmicAuth from "@plasmicapp/react-web/lib/auth";
 import { usePlasmicDataSourceContext } from "@plasmicapp/data-sources-context";
 import {
   executePlasmicDataOp,
@@ -332,8 +335,6 @@ function PlasmicBBsports1__RenderFunc(props) {
                   </Button>
                 </a>
                 <DataFetcher
-                  data-plasmic-name={"httpRestApiFetcher"}
-                  data-plasmic-override={overrides.httpRestApiFetcher}
                   body={{
                     GetProductsListRequestMessage: {
                       apiUser: "popsical@yopmail.com",
@@ -346,7 +347,7 @@ function PlasmicBBsports1__RenderFunc(props) {
                   }}
                   className={classNames(
                     "__wab_instance",
-                    sty.httpRestApiFetcher
+                    sty.httpRestApiFetcher__psWb
                   )}
                   dataName={"fetchedData"}
                   errorDisplay={
@@ -374,7 +375,7 @@ function PlasmicBBsports1__RenderFunc(props) {
                           try {
                             return $ctx.fetchedData
                               .GetProductsListResponseMessage
-                              .productsResponseMessage[4].basicService;
+                              .productsResponseMessage[0];
                           } catch (e) {
                             if (
                               e instanceof TypeError ||
@@ -530,6 +531,70 @@ function PlasmicBBsports1__RenderFunc(props) {
               className={classNames("__wab_instance", sty.bBsportsFooter)}
             />
           </div>
+          <div className={classNames(projectcss.all, sty.freeBox__a2XZv)}>
+            <DataFetcher
+              body={{
+                GetProductsListRequestMessage: {
+                  apiUser: "popsical@yopmail.com",
+                  apiPassword: "Password1@",
+                  channelPartnerID: "POPSICAL",
+                  prodAreaCode: "001",
+                  returnAttributes: "T",
+                  returnAppChannels: "T"
+                }
+              }}
+              className={classNames(
+                "__wab_instance",
+                sty.httpRestApiFetcher__qSn1E
+              )}
+              dataName={"fetchedData"}
+              errorDisplay={
+                <DataCtxReader__>
+                  {$ctx => "Error fetching data"}
+                </DataCtxReader__>
+              }
+              errorName={"fetchError"}
+              headers={{
+                "Content-Type": "application/json",
+                Accept: "application/json"
+              }}
+              loadingDisplay={
+                <DataCtxReader__>{$ctx => "Loading..."}</DataCtxReader__>
+              }
+              method={"POST"}
+              noLayout={false}
+              url={"https://rest-dev.evergent.com/ccb/getProductsList"}
+            >
+              <DataCtxReader__>
+                {$ctx => (
+                  <div
+                    className={classNames(
+                      projectcss.all,
+                      projectcss.__wab_text,
+                      sty.text__saUwa
+                    )}
+                  >
+                    <React.Fragment>
+                      {(() => {
+                        try {
+                          return $ctx.fetchedData.GetProductsListResponseMessage
+                            .status;
+                        } catch (e) {
+                          if (
+                            e instanceof TypeError ||
+                            e?.plasmicType === "PlasmicUndefinedDataError"
+                          ) {
+                            return "";
+                          }
+                          throw e;
+                        }
+                      })()}
+                    </React.Fragment>
+                  </div>
+                )}
+              </DataCtxReader__>
+            </DataFetcher>
+          </div>
         </div>
       </div>
     </React.Fragment>
@@ -543,7 +608,6 @@ const PlasmicDescendants = {
     "img",
     "link",
     "acceptoffer",
-    "httpRestApiFetcher",
     "input",
     "bBsportsFooter2",
     "bBsportsFooter"
@@ -553,7 +617,6 @@ const PlasmicDescendants = {
   img: ["img"],
   link: ["link", "acceptoffer"],
   acceptoffer: ["acceptoffer"],
-  httpRestApiFetcher: ["httpRestApiFetcher", "input"],
   input: ["input"],
   bBsportsFooter2: ["bBsportsFooter2"],
   bBsportsFooter: ["bBsportsFooter"]
@@ -586,16 +649,52 @@ function makeNodeComponent(nodeName) {
   return func;
 }
 
+function withPlasmicPageGuard(WrappedComponent) {
+  const PageGuard = props => (
+    <PlasmicPageGuard__
+      minRole={null}
+      appId={"sMuK5QvKwWGrkw9DYJKXqS"}
+      authorizeEndpoint={"https://studio.plasmic.app/authorize"}
+      canTriggerLogin={true}
+    >
+      <WrappedComponent {...props} />
+    </PlasmicPageGuard__>
+  );
+
+  return PageGuard;
+}
+
+function withUsePlasmicAuth(WrappedComponent) {
+  const WithUsePlasmicAuthComponent = props => {
+    const dataSourceCtx = usePlasmicDataSourceContext() ?? {};
+    const { isUserLoading, user, token } = plasmicAuth.usePlasmicAuth({
+      appId: "sMuK5QvKwWGrkw9DYJKXqS"
+    });
+    return (
+      <PlasmicDataSourceContextProvider__
+        value={{
+          ...dataSourceCtx,
+          isUserLoading,
+          userAuthToken: token,
+          user
+        }}
+      >
+        <WrappedComponent {...props} />
+      </PlasmicDataSourceContextProvider__>
+    );
+  };
+  return WithUsePlasmicAuthComponent;
+}
+
 export const PlasmicBBsports1 = Object.assign(
   // Top-level PlasmicBBsports1 renders the root element
-  makeNodeComponent("root"),
+  withUsePlasmicAuth(withPlasmicPageGuard(makeNodeComponent("root"))),
   {
     // Helper components rendering sub-elements
     bbsportsNavbar: makeNodeComponent("bbsportsNavbar"),
     img: makeNodeComponent("img"),
     link: makeNodeComponent("link"),
     acceptoffer: makeNodeComponent("acceptoffer"),
-    httpRestApiFetcher: makeNodeComponent("httpRestApiFetcher"),
     input: makeNodeComponent("input"),
     bBsportsFooter2: makeNodeComponent("bBsportsFooter2"),
     bBsportsFooter: makeNodeComponent("bBsportsFooter"),

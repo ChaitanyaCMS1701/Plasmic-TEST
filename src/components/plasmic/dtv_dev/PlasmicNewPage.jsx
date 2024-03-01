@@ -10,6 +10,8 @@
 // Component: AYCB2JsD6a96
 import * as React from "react";
 import {
+  PlasmicDataSourceContextProvider as PlasmicDataSourceContextProvider__,
+  PlasmicPageGuard as PlasmicPageGuard__,
   classNames,
   createPlasmicElementProxy,
   deriveRenderOpts,
@@ -17,6 +19,8 @@ import {
   useCurrentUser
 } from "@plasmicapp/react-web";
 import { useDataEnv } from "@plasmicapp/react-web/lib/host";
+import * as plasmicAuth from "@plasmicapp/react-web/lib/auth";
+import { usePlasmicDataSourceContext } from "@plasmicapp/data-sources-context";
 import BbsportsNavbar from "../../BbsportsNavbar"; // plasmic-import: 1H_RiyunFQyd/component
 import SubscriptionSucces from "../../SubscriptionSucces"; // plasmic-import: E54ySe9kb_ns/component
 import Fotter from "../../Fotter"; // plasmic-import: m2U6ZOt1kBnV/component
@@ -129,9 +133,46 @@ function makeNodeComponent(nodeName) {
   return func;
 }
 
+function withPlasmicPageGuard(WrappedComponent) {
+  const PageGuard = props => (
+    <PlasmicPageGuard__
+      minRole={null}
+      appId={"sMuK5QvKwWGrkw9DYJKXqS"}
+      authorizeEndpoint={"https://studio.plasmic.app/authorize"}
+      canTriggerLogin={true}
+    >
+      <WrappedComponent {...props} />
+    </PlasmicPageGuard__>
+  );
+
+  return PageGuard;
+}
+
+function withUsePlasmicAuth(WrappedComponent) {
+  const WithUsePlasmicAuthComponent = props => {
+    const dataSourceCtx = usePlasmicDataSourceContext() ?? {};
+    const { isUserLoading, user, token } = plasmicAuth.usePlasmicAuth({
+      appId: "sMuK5QvKwWGrkw9DYJKXqS"
+    });
+    return (
+      <PlasmicDataSourceContextProvider__
+        value={{
+          ...dataSourceCtx,
+          isUserLoading,
+          userAuthToken: token,
+          user
+        }}
+      >
+        <WrappedComponent {...props} />
+      </PlasmicDataSourceContextProvider__>
+    );
+  };
+  return WithUsePlasmicAuthComponent;
+}
+
 export const PlasmicNewPage = Object.assign(
   // Top-level PlasmicNewPage renders the root element
-  makeNodeComponent("root"),
+  withUsePlasmicAuth(withPlasmicPageGuard(makeNodeComponent("root"))),
   {
     // Helper components rendering sub-elements
     freeBox: makeNodeComponent("freeBox"),
