@@ -180,7 +180,7 @@ function PlasmicBBsports1__RenderFunc(props) {
                     sty.h1__aRmm
                   )}
                 >
-                  {"Upgrade to season pass for free!"}
+                  {"Upgrade to season pas  hjghjgjh for free!"}
                 </h1>
                 <div
                   className={classNames(
