@@ -149,7 +149,7 @@ function PlasmicBBsports1__RenderFunc(props) {
                   sty.h1__vbTi1
                 )}
               >
-                {"Before you go TOM,check out these offers."}
+                {"Before you go JOHN,check out these offers."}
               </h1>
               <PlasmicImg__
                 data-plasmic-name={"img"}
