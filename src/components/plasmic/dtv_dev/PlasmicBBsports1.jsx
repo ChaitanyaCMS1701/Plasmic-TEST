@@ -36,8 +36,8 @@ import {
   usePlasmicInvalidate
 } from "@plasmicapp/react-web/lib/data-sources";
 import BbsportsNavbar from "../../BbsportsNavbar"; // plasmic-import: 1H_RiyunFQyd/component
-import Button from "../../Button"; // plasmic-import: Humveg51WdE0/component
 import { DataFetcher } from "@plasmicpkgs/plasmic-query";
+import Button from "../../Button"; // plasmic-import: Humveg51WdE0/component
 import { AntdInput } from "@plasmicpkgs/antd5/skinny/registerInput";
 import { inputHelpers as AntdInput_Helpers } from "@plasmicpkgs/antd5/skinny/registerInput";
 import BBsportsFooter2 from "../../BBsportsFooter2"; // plasmic-import: DmzRb63NDqeE/component
@@ -149,7 +149,7 @@ function PlasmicBBsports1__RenderFunc(props) {
                   sty.h1__vbTi1
                 )}
               >
-                {"Before you go JOHN,check out these offers."}
+                {"Before you go TOMOO,check out these offers."}
               </h1>
               <PlasmicImg__
                 data-plasmic-name={"img"}
@@ -213,126 +213,188 @@ function PlasmicBBsports1__RenderFunc(props) {
                   data-plasmic-override={overrides.link}
                   className={classNames(projectcss.all, projectcss.a, sty.link)}
                 >
-                  <Button
-                    data-plasmic-name={"acceptoffer"}
-                    data-plasmic-override={overrides.acceptoffer}
-                    className={classNames("__wab_instance", sty.acceptoffer)}
-                    onClick={async event => {
-                      const $steps = {};
-                      $steps["httpGet"] = true
-                        ? (() => {
-                            const actionArgs = {
-                              dataOp: {
-                                sourceId: "7umYyasFHzhotvCU1HCmCe",
-                                opId: "fb44b7c6-7011-4a6b-af1d-94872e15467c",
-                                userArgs: {},
-                                cacheKey: null,
-                                invalidatedKeys: null,
-                                roleId: null
-                              }
-                            };
-                            return (async ({ dataOp, continueOnError }) => {
-                              try {
-                                const response = await executePlasmicDataOp(
-                                  dataOp,
-                                  {
-                                    userAuthToken:
-                                      dataSourcesCtx?.userAuthToken,
-                                    user: dataSourcesCtx?.user
-                                  }
-                                );
-                                await plasmicInvalidate(dataOp.invalidatedKeys);
-                                return response;
-                              } catch (e) {
-                                if (!continueOnError) {
-                                  throw e;
-                                }
-                                return e;
-                              }
-                            })?.apply(null, [actionArgs]);
-                          })()
-                        : undefined;
-                      if (
-                        $steps["httpGet"] != null &&
-                        typeof $steps["httpGet"] === "object" &&
-                        typeof $steps["httpGet"].then === "function"
-                      ) {
-                        $steps["httpGet"] = await $steps["httpGet"];
-                      }
-                      $steps["goToBBsubscriptionUpgrade"] = $steps.httpGet
-                        ? (() => {
-                            const actionArgs = { destination: `/new-page-2` };
-                            return (({ destination }) => {
-                              if (
-                                typeof destination === "string" &&
-                                destination.startsWith("#")
-                              ) {
-                                document
-                                  .getElementById(destination.substr(1))
-                                  .scrollIntoView({ behavior: "smooth" });
-                              } else {
-                                location.assign(destination);
-                              }
-                            })?.apply(null, [actionArgs]);
-                          })()
-                        : undefined;
-                      if (
-                        $steps["goToBBsubscriptionUpgrade"] != null &&
-                        typeof $steps["goToBBsubscriptionUpgrade"] ===
-                          "object" &&
-                        typeof $steps["goToBBsubscriptionUpgrade"].then ===
-                          "function"
-                      ) {
-                        $steps["goToBBsubscriptionUpgrade"] = await $steps[
-                          "goToBBsubscriptionUpgrade"
-                        ];
-                      }
-                      $steps["useIntegration"] = true
-                        ? (() => {
-                            const actionArgs = {};
-                            return (async ({ dataOp, continueOnError }) => {
-                              try {
-                                const response = await executePlasmicDataOp(
-                                  dataOp,
-                                  {
-                                    userAuthToken:
-                                      dataSourcesCtx?.userAuthToken,
-                                    user: dataSourcesCtx?.user
-                                  }
-                                );
-                                await plasmicInvalidate(dataOp.invalidatedKeys);
-                                return response;
-                              } catch (e) {
-                                if (!continueOnError) {
-                                  throw e;
-                                }
-                                return e;
-                              }
-                            })?.apply(null, [actionArgs]);
-                          })()
-                        : undefined;
-                      if (
-                        $steps["useIntegration"] != null &&
-                        typeof $steps["useIntegration"] === "object" &&
-                        typeof $steps["useIntegration"].then === "function"
-                      ) {
-                        $steps["useIntegration"] = await $steps[
-                          "useIntegration"
-                        ];
+                  <DataFetcher
+                    body={{
+                      GetProductsListRequestMessage: {
+                        apiUser: "popsical@yopmail.com",
+                        apiPassword: "Password1@",
+                        channelPartnerID: "POPSICAL",
+                        prodAreaCode: "001",
+                        returnAttributes: "T",
+                        returnAppChannels: "T"
                       }
                     }}
-                    submitsForm={false}
+                    className={classNames(
+                      "__wab_instance",
+                      sty.httpRestApiFetcher__ofJj4
+                    )}
+                    dataName={"fetchedData"}
+                    errorDisplay={
+                      <DataCtxReader__>
+                        {$ctx => "Error fetching data"}
+                      </DataCtxReader__>
+                    }
+                    errorName={"fetchError"}
+                    headers={{
+                      "Content-Type": "application/json",
+                      Accept: "application/json"
+                    }}
+                    loadingDisplay={
+                      <DataCtxReader__>{$ctx => "Loading..."}</DataCtxReader__>
+                    }
+                    method={"POST"}
+                    noLayout={false}
+                    url={"https://rest-dev.evergent.com/ccb/getProductsList"}
                   >
-                    <div
-                      className={classNames(
-                        projectcss.all,
-                        projectcss.__wab_text,
-                        sty.text__osNg7
+                    <DataCtxReader__>
+                      {$ctx => (
+                        <Button
+                          data-plasmic-name={"acceptoffer"}
+                          data-plasmic-override={overrides.acceptoffer}
+                          className={classNames(
+                            "__wab_instance",
+                            sty.acceptoffer
+                          )}
+                          link={(() => {
+                            try {
+                              return undefined;
+                            } catch (e) {
+                              if (
+                                e instanceof TypeError ||
+                                e?.plasmicType === "PlasmicUndefinedDataError"
+                              ) {
+                                return undefined;
+                              }
+                              throw e;
+                            }
+                          })()}
+                          onClick={async event => {
+                            const $steps = {};
+                            $steps["httpGet"] = true
+                              ? (() => {
+                                  const actionArgs = {
+                                    dataOp: {
+                                      sourceId: "7umYyasFHzhotvCU1HCmCe",
+                                      opId: "fb44b7c6-7011-4a6b-af1d-94872e15467c",
+                                      userArgs: {},
+                                      cacheKey: null,
+                                      invalidatedKeys: null,
+                                      roleId: null
+                                    }
+                                  };
+                                  return (async ({
+                                    dataOp,
+                                    continueOnError
+                                  }) => {
+                                    try {
+                                      const response =
+                                        await executePlasmicDataOp(dataOp, {
+                                          userAuthToken:
+                                            dataSourcesCtx?.userAuthToken,
+                                          user: dataSourcesCtx?.user
+                                        });
+                                      await plasmicInvalidate(
+                                        dataOp.invalidatedKeys
+                                      );
+                                      return response;
+                                    } catch (e) {
+                                      if (!continueOnError) {
+                                        throw e;
+                                      }
+                                      return e;
+                                    }
+                                  })?.apply(null, [actionArgs]);
+                                })()
+                              : undefined;
+                            if (
+                              $steps["httpGet"] != null &&
+                              typeof $steps["httpGet"] === "object" &&
+                              typeof $steps["httpGet"].then === "function"
+                            ) {
+                              $steps["httpGet"] = await $steps["httpGet"];
+                            }
+                            $steps["goToBBsubscriptionUpgrade"] = $steps.httpGet
+                              ? (() => {
+                                  const actionArgs = {
+                                    destination: `/new-page-2`
+                                  };
+                                  return (({ destination }) => {
+                                    if (
+                                      typeof destination === "string" &&
+                                      destination.startsWith("#")
+                                    ) {
+                                      document
+                                        .getElementById(destination.substr(1))
+                                        .scrollIntoView({ behavior: "smooth" });
+                                    } else {
+                                      location.assign(destination);
+                                    }
+                                  })?.apply(null, [actionArgs]);
+                                })()
+                              : undefined;
+                            if (
+                              $steps["goToBBsubscriptionUpgrade"] != null &&
+                              typeof $steps["goToBBsubscriptionUpgrade"] ===
+                                "object" &&
+                              typeof $steps["goToBBsubscriptionUpgrade"]
+                                .then === "function"
+                            ) {
+                              $steps["goToBBsubscriptionUpgrade"] =
+                                await $steps["goToBBsubscriptionUpgrade"];
+                            }
+                            $steps["useIntegration"] = true
+                              ? (() => {
+                                  const actionArgs = {};
+                                  return (async ({
+                                    dataOp,
+                                    continueOnError
+                                  }) => {
+                                    try {
+                                      const response =
+                                        await executePlasmicDataOp(dataOp, {
+                                          userAuthToken:
+                                            dataSourcesCtx?.userAuthToken,
+                                          user: dataSourcesCtx?.user
+                                        });
+                                      await plasmicInvalidate(
+                                        dataOp.invalidatedKeys
+                                      );
+                                      return response;
+                                    } catch (e) {
+                                      if (!continueOnError) {
+                                        throw e;
+                                      }
+                                      return e;
+                                    }
+                                  })?.apply(null, [actionArgs]);
+                                })()
+                              : undefined;
+                            if (
+                              $steps["useIntegration"] != null &&
+                              typeof $steps["useIntegration"] === "object" &&
+                              typeof $steps["useIntegration"].then ===
+                                "function"
+                            ) {
+                              $steps["useIntegration"] = await $steps[
+                                "useIntegration"
+                              ];
+                            }
+                          }}
+                          submitsForm={false}
+                        >
+                          <div
+                            className={classNames(
+                              projectcss.all,
+                              projectcss.__wab_text,
+                              sty.text__osNg7
+                            )}
+                          >
+                            {"ACCEPT OFFER"}
+                          </div>
+                        </Button>
                       )}
-                    >
-                      {"ACCEPT OFFER"}
-                    </div>
-                  </Button>
+                    </DataCtxReader__>
+                  </DataFetcher>
                 </a>
                 <DataFetcher
                   body={{
@@ -578,7 +640,7 @@ function PlasmicBBsports1__RenderFunc(props) {
                       {(() => {
                         try {
                           return $ctx.fetchedData.GetProductsListResponseMessage
-                            .status;
+                            .productsResponseMessage[1].retailPrice;
                         } catch (e) {
                           if (
                             e instanceof TypeError ||
