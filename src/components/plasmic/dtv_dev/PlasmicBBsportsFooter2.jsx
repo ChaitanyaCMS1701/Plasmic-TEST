@@ -17,8 +17,12 @@ import {
   ensureGlobalVariants,
   useCurrentUser
 } from "@plasmicapp/react-web";
-import { useDataEnv } from "@plasmicapp/react-web/lib/host";
+import {
+  DataCtxReader as DataCtxReader__,
+  useDataEnv
+} from "@plasmicapp/react-web/lib/host";
 import Button from "../../Button"; // plasmic-import: Humveg51WdE0/component
+import { DataFetcher } from "@plasmicpkgs/plasmic-query";
 import { useScreenVariants as useScreenVariantscVfb4YQ8QuPw } from "./PlasmicGlobalVariant__Screen"; // plasmic-import: CVfb4yQ8quPw/globalVariant
 import "@plasmicapp/react-web/lib/plasmic.css";
 import plasmic_antd_5_hostless_css from "../antd_5_hostless/plasmic.module.css"; // plasmic-import: ohDidvG9XsCeFumugENU3J/projectcss
@@ -79,23 +83,82 @@ function PlasmicBBsportsFooter2__RenderFunc(props) {
           {"CONTINUE TO CANCLE THE SUBSCRITION"}
         </div>
       </Button>
-      <Button className={classNames("__wab_instance", sty.button__yKxGm)}>
-        <div
-          className={classNames(
-            projectcss.all,
-            projectcss.__wab_text,
-            sty.text__uua2C
-          )}
-        >
-          {"NEVER MIND,I 'D LIKE TO STAY SUBSCRIBED"}
-        </div>
-      </Button>
+      <DataFetcher
+        data-plasmic-name={"httpRestApiFetcher"}
+        data-plasmic-override={overrides.httpRestApiFetcher}
+        body={{
+          GetProductsListRequestMessage: {
+            apiUser: "popsical@yopmail.com",
+            apiPassword: "Password1@",
+            channelPartnerID: "POPSICAL",
+            prodAreaCode: "001",
+            returnAttributes: "T",
+            returnAppChannels: "T"
+          }
+        }}
+        className={classNames("__wab_instance", sty.httpRestApiFetcher)}
+        dataName={"fetchedData"}
+        errorDisplay={
+          <DataCtxReader__>{$ctx => "Error fetching data"}</DataCtxReader__>
+        }
+        errorName={"fetchError"}
+        headers={{
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }}
+        loadingDisplay={
+          <DataCtxReader__>{$ctx => "Loading..."}</DataCtxReader__>
+        }
+        method={"POST"}
+        noLayout={false}
+        url={"https://rest-dev.evergent.com/ccb/getProductsList"}
+      >
+        <DataCtxReader__>
+          {$ctx =>
+            (_par => (!_par ? [] : Array.isArray(_par) ? _par : [_par]))(
+              (() => {
+                try {
+                  return [1];
+                } catch (e) {
+                  if (
+                    e instanceof TypeError ||
+                    e?.plasmicType === "PlasmicUndefinedDataError"
+                  ) {
+                    return [];
+                  }
+                  throw e;
+                }
+              })()
+            ).map((__plasmic_item_0, __plasmic_idx_0) => {
+              const currentItem = __plasmic_item_0;
+              const currentIndex = __plasmic_idx_0;
+              return (
+                <Button
+                  className={classNames("__wab_instance", sty.button__yKxGm)}
+                  key={currentIndex}
+                >
+                  <div
+                    className={classNames(
+                      projectcss.all,
+                      projectcss.__wab_text,
+                      sty.text__uua2C
+                    )}
+                  >
+                    {"NEVER MIND,I 'D LIKE TO STAY SUBSCRIBED"}
+                  </div>
+                </Button>
+              );
+            })
+          }
+        </DataCtxReader__>
+      </DataFetcher>
     </Stack__>
   );
 }
 
 const PlasmicDescendants = {
-  root: ["root"]
+  root: ["root", "httpRestApiFetcher"],
+  httpRestApiFetcher: ["httpRestApiFetcher"]
 };
 
 function makeNodeComponent(nodeName) {
@@ -130,6 +193,7 @@ export const PlasmicBBsportsFooter2 = Object.assign(
   makeNodeComponent("root"),
   {
     // Helper components rendering sub-elements
+    httpRestApiFetcher: makeNodeComponent("httpRestApiFetcher"),
     // Metadata about props expected for PlasmicBBsportsFooter2
     internalVariantProps: PlasmicBBsportsFooter2__VariantProps,
     internalArgProps: PlasmicBBsportsFooter2__ArgProps

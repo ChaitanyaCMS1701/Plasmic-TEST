@@ -78,12 +78,17 @@
   width: auto;
   height: 1em;
 }
+.httpRestApiFetcher:global(.__wab_instance) {
+  width: auto;
+  max-width: 100%;
+  object-fit: cover;
+  position: relative;
+}
 .button__yKxGm:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
   width: 300px;
   margin-right: 34px;
-  flex-shrink: 0;
 }
 .svg___2AU78 {
   position: relative;

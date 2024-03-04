@@ -17,11 +17,7 @@ import {
   createPlasmicElementProxy,
   deriveRenderOpts,
   ensureGlobalVariants,
-  generateOnMutateForSpec,
-  generateStateOnChangePropForCodeComponents,
-  generateStateValueProp,
-  initializeCodeComponentStates,
-  initializePlasmicStates,
+  set as $stateSet,
   useCurrentUser,
   useDollarState
 } from "@plasmicapp/react-web";
@@ -31,15 +27,9 @@ import {
 } from "@plasmicapp/react-web/lib/host";
 import * as plasmicAuth from "@plasmicapp/react-web/lib/auth";
 import { usePlasmicDataSourceContext } from "@plasmicapp/data-sources-context";
-import {
-  executePlasmicDataOp,
-  usePlasmicInvalidate
-} from "@plasmicapp/react-web/lib/data-sources";
 import BbsportsNavbar from "../../BbsportsNavbar"; // plasmic-import: 1H_RiyunFQyd/component
 import { DataFetcher } from "@plasmicpkgs/plasmic-query";
 import Button from "../../Button"; // plasmic-import: Humveg51WdE0/component
-import { AntdInput } from "@plasmicpkgs/antd5/skinny/registerInput";
-import { inputHelpers as AntdInput_Helpers } from "@plasmicpkgs/antd5/skinny/registerInput";
 import BBsportsFooter2 from "../../BBsportsFooter2"; // plasmic-import: DmzRb63NDqeE/component
 import Fotter from "../../Fotter"; // plasmic-import: m2U6ZOt1kBnV/component
 import { useScreenVariants as useScreenVariantscVfb4YQ8QuPw } from "./PlasmicGlobalVariant__Screen"; // plasmic-import: CVfb4yQ8quPw/globalVariant
@@ -71,10 +61,22 @@ function PlasmicBBsports1__RenderFunc(props) {
   const stateSpecs = React.useMemo(
     () => [
       {
-        path: "input[][].value",
+        path: "loggedInUser",
+        type: "private",
+        variableType: "object",
+        initFunc: ({ $props, $state, $queries, $ctx }) => ({
+          name: "Jhon",
+          phoneNumber: "abcd",
+          cpCustomerID: "auth0|a9130234c98e21387",
+          oldServiceID: "FSWFSP",
+          newServiceID: "WE_ANNUAL"
+        })
+      },
+      {
+        path: "variable",
         type: "private",
         variableType: "text",
-        onMutate: generateOnMutateForSpec("value", AntdInput_Helpers)
+        initFunc: ({ $props, $state, $queries, $ctx }) => ""
       }
     ],
 
@@ -86,8 +88,6 @@ function PlasmicBBsports1__RenderFunc(props) {
     $queries: {},
     $refs
   });
-  const dataSourcesCtx = usePlasmicDataSourceContext();
-  const plasmicInvalidate = usePlasmicInvalidate();
   const globalVariants = ensureGlobalVariants({
     screen: useScreenVariantscVfb4YQ8QuPw()
   });
@@ -132,6 +132,35 @@ function PlasmicBBsports1__RenderFunc(props) {
               ];
             }
           }}
+          onLoad={async event => {
+            const $steps = {};
+            $steps["updatedUser"] = true
+              ? (() => {
+                  const actionArgs = {
+                    variable: {
+                      objRoot: $state,
+                      variablePath: ["loggedInUser"]
+                    },
+                    operation: 0
+                  };
+                  return (({ variable, value, startIndex, deleteCount }) => {
+                    if (!variable) {
+                      return;
+                    }
+                    const { objRoot, variablePath } = variable;
+                    $stateSet(objRoot, variablePath, value);
+                    return value;
+                  })?.apply(null, [actionArgs]);
+                })()
+              : undefined;
+            if (
+              $steps["updatedUser"] != null &&
+              typeof $steps["updatedUser"] === "object" &&
+              typeof $steps["updatedUser"].then === "function"
+            ) {
+              $steps["updatedUser"] = await $steps["updatedUser"];
+            }
+          }}
         >
           <div className={classNames(projectcss.all, sty.freeBox__qFub1)}>
             <BbsportsNavbar
@@ -148,8 +177,53 @@ function PlasmicBBsports1__RenderFunc(props) {
                   projectcss.__wab_text,
                   sty.h1__vbTi1
                 )}
+                onClick={async event => {
+                  const $steps = {};
+                  $steps["goToPage"] = true
+                    ? (() => {
+                        const actionArgs = {};
+                        return (({ destination }) => {
+                          if (
+                            typeof destination === "string" &&
+                            destination.startsWith("#")
+                          ) {
+                            document
+                              .getElementById(destination.substr(1))
+                              .scrollIntoView({ behavior: "smooth" });
+                          } else {
+                            location.assign(destination);
+                          }
+                        })?.apply(null, [actionArgs]);
+                      })()
+                    : undefined;
+                  if (
+                    $steps["goToPage"] != null &&
+                    typeof $steps["goToPage"] === "object" &&
+                    typeof $steps["goToPage"].then === "function"
+                  ) {
+                    $steps["goToPage"] = await $steps["goToPage"];
+                  }
+                }}
               >
-                {"Before you go TOMOO,check out these offers."}
+                <React.Fragment>
+                  {(() => {
+                    try {
+                      return (
+                        "Before you go " +
+                        $state.loggedInUser.name +
+                        " ,check out these offers."
+                      );
+                    } catch (e) {
+                      if (
+                        e instanceof TypeError ||
+                        e?.plasmicType === "PlasmicUndefinedDataError"
+                      ) {
+                        return "Before you go TOMOO,check out these offers.";
+                      }
+                      throw e;
+                    }
+                  })()}
+                </React.Fragment>
               </h1>
               <PlasmicImg__
                 data-plasmic-name={"img"}
@@ -214,37 +288,62 @@ function PlasmicBBsports1__RenderFunc(props) {
                   className={classNames(projectcss.all, projectcss.a, sty.link)}
                 >
                   <DataFetcher
+                    data-plasmic-name={"httpRestApiFetcher"}
+                    data-plasmic-override={overrides.httpRestApiFetcher}
                     body={{
-                      GetProductsListRequestMessage: {
-                        apiUser: "popsical@yopmail.com",
-                        apiPassword: "Password1@",
-                        channelPartnerID: "POPSICAL",
-                        prodAreaCode: "001",
-                        returnAttributes: "T",
-                        returnAppChannels: "T"
+                      ChangeServiceRequestMessage: {
+                        channelPartnerID: "Sinclair",
+                        apiKey: "S1ncl2ir@dm!n21#",
+                        cpCustomerID: "auth0|a9130234c98e21387",
+                        oldServiceID: "FSWFSP",
+                        newServiceID: "WE_ANNUAL"
                       }
                     }}
                     className={classNames(
                       "__wab_instance",
-                      sty.httpRestApiFetcher__ofJj4
+                      sty.httpRestApiFetcher
                     )}
-                    dataName={"fetchedData"}
+                    dataName={(() => {
+                      try {
+                        return undefined;
+                      } catch (e) {
+                        if (
+                          e instanceof TypeError ||
+                          e?.plasmicType === "PlasmicUndefinedDataError"
+                        ) {
+                          return "fetchedData";
+                        }
+                        throw e;
+                      }
+                    })()}
                     errorDisplay={
                       <DataCtxReader__>
                         {$ctx => "Error fetching data"}
                       </DataCtxReader__>
                     }
                     errorName={"fetchError"}
-                    headers={{
-                      "Content-Type": "application/json",
-                      Accept: "application/json"
-                    }}
+                    headers={{ "Content-Type": "application/json" }}
                     loadingDisplay={
                       <DataCtxReader__>{$ctx => "Loading..."}</DataCtxReader__>
                     }
                     method={"POST"}
                     noLayout={false}
-                    url={"https://rest-dev.evergent.com/ccb/getProductsList"}
+                    previewSpinner={(() => {
+                      try {
+                        return undefined;
+                      } catch (e) {
+                        if (
+                          e instanceof TypeError ||
+                          e?.plasmicType === "PlasmicUndefinedDataError"
+                        ) {
+                          return false;
+                        }
+                        throw e;
+                      }
+                    })()}
+                    url={
+                      "https://rest-preprod-sinclair.evergent.com/sinclair/changeService"
+                    }
                   >
                     <DataCtxReader__>
                       {$ctx => (
@@ -270,49 +369,6 @@ function PlasmicBBsports1__RenderFunc(props) {
                           })()}
                           onClick={async event => {
                             const $steps = {};
-                            $steps["httpGet"] = true
-                              ? (() => {
-                                  const actionArgs = {
-                                    dataOp: {
-                                      sourceId: "7umYyasFHzhotvCU1HCmCe",
-                                      opId: "fb44b7c6-7011-4a6b-af1d-94872e15467c",
-                                      userArgs: {},
-                                      cacheKey: null,
-                                      invalidatedKeys: null,
-                                      roleId: null
-                                    }
-                                  };
-                                  return (async ({
-                                    dataOp,
-                                    continueOnError
-                                  }) => {
-                                    try {
-                                      const response =
-                                        await executePlasmicDataOp(dataOp, {
-                                          userAuthToken:
-                                            dataSourcesCtx?.userAuthToken,
-                                          user: dataSourcesCtx?.user
-                                        });
-                                      await plasmicInvalidate(
-                                        dataOp.invalidatedKeys
-                                      );
-                                      return response;
-                                    } catch (e) {
-                                      if (!continueOnError) {
-                                        throw e;
-                                      }
-                                      return e;
-                                    }
-                                  })?.apply(null, [actionArgs]);
-                                })()
-                              : undefined;
-                            if (
-                              $steps["httpGet"] != null &&
-                              typeof $steps["httpGet"] === "object" &&
-                              typeof $steps["httpGet"].then === "function"
-                            ) {
-                              $steps["httpGet"] = await $steps["httpGet"];
-                            }
                             $steps["goToBBsubscriptionUpgrade"] = $steps.httpGet
                               ? (() => {
                                   const actionArgs = {
@@ -342,43 +398,6 @@ function PlasmicBBsports1__RenderFunc(props) {
                               $steps["goToBBsubscriptionUpgrade"] =
                                 await $steps["goToBBsubscriptionUpgrade"];
                             }
-                            $steps["useIntegration"] = true
-                              ? (() => {
-                                  const actionArgs = {};
-                                  return (async ({
-                                    dataOp,
-                                    continueOnError
-                                  }) => {
-                                    try {
-                                      const response =
-                                        await executePlasmicDataOp(dataOp, {
-                                          userAuthToken:
-                                            dataSourcesCtx?.userAuthToken,
-                                          user: dataSourcesCtx?.user
-                                        });
-                                      await plasmicInvalidate(
-                                        dataOp.invalidatedKeys
-                                      );
-                                      return response;
-                                    } catch (e) {
-                                      if (!continueOnError) {
-                                        throw e;
-                                      }
-                                      return e;
-                                    }
-                                  })?.apply(null, [actionArgs]);
-                                })()
-                              : undefined;
-                            if (
-                              $steps["useIntegration"] != null &&
-                              typeof $steps["useIntegration"] === "object" &&
-                              typeof $steps["useIntegration"].then ===
-                                "function"
-                            ) {
-                              $steps["useIntegration"] = await $steps[
-                                "useIntegration"
-                              ];
-                            }
                           }}
                           submitsForm={false}
                         >
@@ -396,176 +415,6 @@ function PlasmicBBsports1__RenderFunc(props) {
                     </DataCtxReader__>
                   </DataFetcher>
                 </a>
-                <DataFetcher
-                  body={{
-                    GetProductsListRequestMessage: {
-                      apiUser: "popsical@yopmail.com",
-                      apiPassword: "Password1@",
-                      channelPartnerID: "POPSICAL",
-                      prodAreaCode: "001",
-                      returnAttributes: "T",
-                      returnAppChannels: "T"
-                    }
-                  }}
-                  className={classNames(
-                    "__wab_instance",
-                    sty.httpRestApiFetcher__psWb
-                  )}
-                  dataName={"fetchedData"}
-                  errorDisplay={
-                    <DataCtxReader__>
-                      {$ctx => "Error fetching data"}
-                    </DataCtxReader__>
-                  }
-                  errorName={"fetchError"}
-                  headers={{
-                    "Content-Type": "application/json",
-                    Accept: "application/json"
-                  }}
-                  loadingDisplay={
-                    <DataCtxReader__>{$ctx => "Loading..."}</DataCtxReader__>
-                  }
-                  method={"POST"}
-                  noLayout={false}
-                  url={"https://rest-dev.evergent.com/ccb/getProductsList"}
-                >
-                  <DataCtxReader__>
-                    {$ctx =>
-                      (_par =>
-                        !_par ? [] : Array.isArray(_par) ? _par : [_par])(
-                        (() => {
-                          try {
-                            return $ctx.fetchedData
-                              .GetProductsListResponseMessage
-                              .productsResponseMessage[0];
-                          } catch (e) {
-                            if (
-                              e instanceof TypeError ||
-                              e?.plasmicType === "PlasmicUndefinedDataError"
-                            ) {
-                              return [];
-                            }
-                            throw e;
-                          }
-                        })()
-                      ).map((__plasmic_item_0, __plasmic_idx_0) => {
-                        const currentItem = __plasmic_item_0;
-                        const currentIndex = __plasmic_idx_0;
-                        return (
-                          <div
-                            className={classNames(
-                              projectcss.all,
-                              sty.freeBox__v9TAs
-                            )}
-                            key={currentIndex}
-                          >
-                            {(_par =>
-                              !_par ? [] : Array.isArray(_par) ? _par : [_par])(
-                              (() => {
-                                try {
-                                  return $ctx.fetchedData
-                                    .GetProductsListResponseMessage
-                                    .productsResponseMessage;
-                                } catch (e) {
-                                  if (
-                                    e instanceof TypeError ||
-                                    e?.plasmicType ===
-                                      "PlasmicUndefinedDataError"
-                                  ) {
-                                    return [];
-                                  }
-                                  throw e;
-                                }
-                              })()
-                            ).map((__plasmic_item_1, __plasmic_idx_1) => {
-                              const currentItem = __plasmic_item_1;
-                              const currentIndex = __plasmic_idx_1;
-                              return (() => {
-                                const child$Props = {
-                                  className: classNames(
-                                    "__wab_instance",
-                                    sty.input
-                                  ),
-                                  key: currentIndex,
-                                  onChange:
-                                    generateStateOnChangePropForCodeComponents(
-                                      $state,
-                                      "value",
-                                      [
-                                        "input",
-                                        __plasmic_idx_0,
-                                        __plasmic_idx_1,
-                                        "value"
-                                      ],
-
-                                      AntdInput_Helpers
-                                    ),
-                                  value: generateStateValueProp($state, [
-                                    "input",
-                                    __plasmic_idx_0,
-                                    __plasmic_idx_1,
-                                    "value"
-                                  ])
-                                };
-                                initializeCodeComponentStates(
-                                  $state,
-                                  [
-                                    {
-                                      name: "value",
-                                      plasmicStateName: "input[][].value"
-                                    }
-                                  ],
-
-                                  [__plasmic_idx_0, __plasmic_idx_1],
-                                  AntdInput_Helpers ?? {},
-                                  child$Props
-                                );
-                                initializePlasmicStates(
-                                  $state,
-                                  [
-                                    {
-                                      name: "input[][].value",
-                                      initFunc: ({
-                                        $props,
-                                        $state,
-                                        $queries
-                                      }) =>
-                                        (() => {
-                                          try {
-                                            return $ctx.fetchedData
-                                              .GetProductsListResponseMessage
-                                              .productsResponseMessage;
-                                          } catch (e) {
-                                            if (
-                                              e instanceof TypeError ||
-                                              e?.plasmicType ===
-                                                "PlasmicUndefinedDataError"
-                                            ) {
-                                              return undefined;
-                                            }
-                                            throw e;
-                                          }
-                                        })()
-                                    }
-                                  ],
-
-                                  [__plasmic_idx_0, __plasmic_idx_1]
-                                );
-                                return (
-                                  <AntdInput
-                                    data-plasmic-name={"input"}
-                                    data-plasmic-override={overrides.input}
-                                    {...child$Props}
-                                  />
-                                );
-                              })();
-                            })}
-                          </div>
-                        );
-                      })
-                    }
-                  </DataCtxReader__>
-                </DataFetcher>
               </div>
               <div
                 className={classNames(
@@ -593,70 +442,6 @@ function PlasmicBBsports1__RenderFunc(props) {
               className={classNames("__wab_instance", sty.bBsportsFooter)}
             />
           </div>
-          <div className={classNames(projectcss.all, sty.freeBox__a2XZv)}>
-            <DataFetcher
-              body={{
-                GetProductsListRequestMessage: {
-                  apiUser: "popsical@yopmail.com",
-                  apiPassword: "Password1@",
-                  channelPartnerID: "POPSICAL",
-                  prodAreaCode: "001",
-                  returnAttributes: "T",
-                  returnAppChannels: "T"
-                }
-              }}
-              className={classNames(
-                "__wab_instance",
-                sty.httpRestApiFetcher__qSn1E
-              )}
-              dataName={"fetchedData"}
-              errorDisplay={
-                <DataCtxReader__>
-                  {$ctx => "Error fetching data"}
-                </DataCtxReader__>
-              }
-              errorName={"fetchError"}
-              headers={{
-                "Content-Type": "application/json",
-                Accept: "application/json"
-              }}
-              loadingDisplay={
-                <DataCtxReader__>{$ctx => "Loading..."}</DataCtxReader__>
-              }
-              method={"POST"}
-              noLayout={false}
-              url={"https://rest-dev.evergent.com/ccb/getProductsList"}
-            >
-              <DataCtxReader__>
-                {$ctx => (
-                  <div
-                    className={classNames(
-                      projectcss.all,
-                      projectcss.__wab_text,
-                      sty.text__saUwa
-                    )}
-                  >
-                    <React.Fragment>
-                      {(() => {
-                        try {
-                          return $ctx.fetchedData.GetProductsListResponseMessage
-                            .productsResponseMessage[1].retailPrice;
-                        } catch (e) {
-                          if (
-                            e instanceof TypeError ||
-                            e?.plasmicType === "PlasmicUndefinedDataError"
-                          ) {
-                            return "";
-                          }
-                          throw e;
-                        }
-                      })()}
-                    </React.Fragment>
-                  </div>
-                )}
-              </DataCtxReader__>
-            </DataFetcher>
-          </div>
         </div>
       </div>
     </React.Fragment>
@@ -669,17 +454,17 @@ const PlasmicDescendants = {
     "bbsportsNavbar",
     "img",
     "link",
+    "httpRestApiFetcher",
     "acceptoffer",
-    "input",
     "bBsportsFooter2",
     "bBsportsFooter"
   ],
 
   bbsportsNavbar: ["bbsportsNavbar"],
   img: ["img"],
-  link: ["link", "acceptoffer"],
+  link: ["link", "httpRestApiFetcher", "acceptoffer"],
+  httpRestApiFetcher: ["httpRestApiFetcher", "acceptoffer"],
   acceptoffer: ["acceptoffer"],
-  input: ["input"],
   bBsportsFooter2: ["bBsportsFooter2"],
   bBsportsFooter: ["bBsportsFooter"]
 };
@@ -756,8 +541,8 @@ export const PlasmicBBsports1 = Object.assign(
     bbsportsNavbar: makeNodeComponent("bbsportsNavbar"),
     img: makeNodeComponent("img"),
     link: makeNodeComponent("link"),
+    httpRestApiFetcher: makeNodeComponent("httpRestApiFetcher"),
     acceptoffer: makeNodeComponent("acceptoffer"),
-    input: makeNodeComponent("input"),
     bBsportsFooter2: makeNodeComponent("bBsportsFooter2"),
     bBsportsFooter: makeNodeComponent("bBsportsFooter"),
     // Metadata about props expected for PlasmicBBsports1

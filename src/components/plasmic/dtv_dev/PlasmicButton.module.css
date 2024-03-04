@@ -2,9 +2,12 @@
   display: flex;
   position: relative;
   flex-direction: row;
-  background: linear-gradient(#000000, #000000),
-    linear-gradient(#ffffff, #ffffff), linear-gradient(#000000, #000000),
-    #232320;
+  background: linear-gradient(
+      var(--token-RvPI6LyeIPmd),
+      var(--token-RvPI6LyeIPmd)
+    ),
+    linear-gradient(#000000, #000000), linear-gradient(#ffffff, #ffffff),
+    linear-gradient(#000000, #000000), #232320;
   cursor: pointer;
   transition-property: background;
   transition-duration: 0.1s;
