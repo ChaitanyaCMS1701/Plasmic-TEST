@@ -455,29 +455,6 @@ function PlasmicEvBox__RenderFunc(props) {
               {"Customer Support"}
             </div>
           </div>
-          <div
-            className={classNames(
-              projectcss.all,
-              projectcss.__wab_text,
-              sty.text__lf7W
-            )}
-          >
-            <React.Fragment>
-              {(() => {
-                try {
-                  return currentUser.isLoggedIn;
-                } catch (e) {
-                  if (
-                    e instanceof TypeError ||
-                    e?.plasmicType === "PlasmicUndefinedDataError"
-                  ) {
-                    return "";
-                  }
-                  throw e;
-                }
-              })()}
-            </React.Fragment>
-          </div>
         </div>
       </div>
     </React.Fragment>

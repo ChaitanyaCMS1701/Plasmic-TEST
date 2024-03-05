@@ -291,31 +291,20 @@ function PlasmicBBsports1__RenderFunc(props) {
                     data-plasmic-name={"httpRestApiFetcher"}
                     data-plasmic-override={overrides.httpRestApiFetcher}
                     body={{
-                      ChangeServiceRequestMessage: {
-                        channelPartnerID: "Sinclair",
-                        apiKey: "S1ncl2ir@dm!n21#",
-                        cpCustomerID: "auth0|a9130234c98e21387",
-                        oldServiceID: "FSWFSP",
-                        newServiceID: "WE_ANNUAL"
+                      GetProductsListRequestMessage: {
+                        apiUser: "popsical@yopmail.com",
+                        apiPassword: "Password1@",
+                        channelPartnerID: "POPSICAL",
+                        prodAreaCode: "001",
+                        returnAttributes: "T",
+                        returnAppChannels: "T"
                       }
                     }}
                     className={classNames(
                       "__wab_instance",
                       sty.httpRestApiFetcher
                     )}
-                    dataName={(() => {
-                      try {
-                        return undefined;
-                      } catch (e) {
-                        if (
-                          e instanceof TypeError ||
-                          e?.plasmicType === "PlasmicUndefinedDataError"
-                        ) {
-                          return "fetchedData";
-                        }
-                        throw e;
-                      }
-                    })()}
+                    dataName={"fetchedData"}
                     errorDisplay={
                       <DataCtxReader__>
                         {$ctx => "Error fetching data"}
@@ -328,22 +317,7 @@ function PlasmicBBsports1__RenderFunc(props) {
                     }
                     method={"POST"}
                     noLayout={false}
-                    previewSpinner={(() => {
-                      try {
-                        return undefined;
-                      } catch (e) {
-                        if (
-                          e instanceof TypeError ||
-                          e?.plasmicType === "PlasmicUndefinedDataError"
-                        ) {
-                          return false;
-                        }
-                        throw e;
-                      }
-                    })()}
-                    url={
-                      "https://rest-preprod-sinclair.evergent.com/sinclair/changeService"
-                    }
+                    url={"https://rest-dev.evergent.com/ccb/getProductsList"}
                   >
                     <DataCtxReader__>
                       {$ctx => (
@@ -354,22 +328,9 @@ function PlasmicBBsports1__RenderFunc(props) {
                             "__wab_instance",
                             sty.acceptoffer
                           )}
-                          link={(() => {
-                            try {
-                              return undefined;
-                            } catch (e) {
-                              if (
-                                e instanceof TypeError ||
-                                e?.plasmicType === "PlasmicUndefinedDataError"
-                              ) {
-                                return undefined;
-                              }
-                              throw e;
-                            }
-                          })()}
                           onClick={async event => {
                             const $steps = {};
-                            $steps["goToBBsubscriptionUpgrade"] = $steps.httpGet
+                            $steps["updateLoggedInUser2"] = true
                               ? (() => {
                                   const actionArgs = {
                                     destination: `/new-page-2`
@@ -389,14 +350,15 @@ function PlasmicBBsports1__RenderFunc(props) {
                                 })()
                               : undefined;
                             if (
-                              $steps["goToBBsubscriptionUpgrade"] != null &&
-                              typeof $steps["goToBBsubscriptionUpgrade"] ===
+                              $steps["updateLoggedInUser2"] != null &&
+                              typeof $steps["updateLoggedInUser2"] ===
                                 "object" &&
-                              typeof $steps["goToBBsubscriptionUpgrade"]
-                                .then === "function"
+                              typeof $steps["updateLoggedInUser2"].then ===
+                                "function"
                             ) {
-                              $steps["goToBBsubscriptionUpgrade"] =
-                                await $steps["goToBBsubscriptionUpgrade"];
+                              $steps["updateLoggedInUser2"] = await $steps[
+                                "updateLoggedInUser2"
+                              ];
                             }
                           }}
                           submitsForm={false}

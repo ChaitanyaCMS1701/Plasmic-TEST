@@ -920,12 +920,6 @@
           "name": "Fetcher",
           "displayName": "plasmic-data-source-fetcher",
           "componentImportPath": "@plasmicapp/react-web/lib/data-sources"
-        },
-        {
-          "id": "1CzaQNSqdyvW",
-          "name": "Comp1CzaQnSqdyvW",
-          "displayName": "ProductCard",
-          "componentImportPath": ""
         }
       ],
       "customFunctions": []

@@ -245,14 +245,10 @@ function PlasmicSignInForm__RenderFunc(props) {
                 ? (() => {
                     const actionArgs = {
                       customFunction: async () => {
-                        return (() => {
-                          const captureInput = event => {
-                            $state.input.email = event.target.email.value;
-                            $state.passwordInput.password =
-                              event.target.password.value;
-                          };
-                          return captureInput();
-                        })();
+                        return console.log(
+                          $state.input.value,
+                          $state.passwordInput.value
+                        );
                       }
                     };
                     return (({ customFunction }) => {
