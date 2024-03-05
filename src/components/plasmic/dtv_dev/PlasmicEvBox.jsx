@@ -19,6 +19,7 @@ import {
   generateStateOnChangePropForCodeComponents,
   generateStateValueProp,
   initializeCodeComponentStates,
+  set as $stateSet,
   useCurrentUser,
   useDollarState
 } from "@plasmicapp/react-web";
@@ -167,6 +168,7 @@ function PlasmicEvBox__RenderFunc(props) {
               </div>
               {(() => {
                 const child$Props = {
+                  allowClear: false,
                   className: classNames("__wab_instance", sty.input),
                   onChange: generateStateOnChangePropForCodeComponents(
                     $state,
@@ -174,6 +176,42 @@ function PlasmicEvBox__RenderFunc(props) {
                     ["input", "value"],
                     AntdInput_Helpers
                   ),
+                  onPressEnter: async event => {
+                    const $steps = {};
+                    $steps["updateInputValue"] = true
+                      ? (() => {
+                          const actionArgs = {
+                            variable: {
+                              objRoot: $state,
+                              variablePath: ["input", "value"]
+                            },
+                            operation: 0
+                          };
+                          return (({
+                            variable,
+                            value,
+                            startIndex,
+                            deleteCount
+                          }) => {
+                            if (!variable) {
+                              return;
+                            }
+                            const { objRoot, variablePath } = variable;
+                            $stateSet(objRoot, variablePath, value);
+                            return value;
+                          })?.apply(null, [actionArgs]);
+                        })()
+                      : undefined;
+                    if (
+                      $steps["updateInputValue"] != null &&
+                      typeof $steps["updateInputValue"] === "object" &&
+                      typeof $steps["updateInputValue"].then === "function"
+                    ) {
+                      $steps["updateInputValue"] = await $steps[
+                        "updateInputValue"
+                      ];
+                    }
+                  },
                   placeholder: "Your email address",
                   type: "email",
                   value: generateStateValueProp($state, ["input", "value"])
@@ -224,6 +262,42 @@ function PlasmicEvBox__RenderFunc(props) {
                     ["passwordInput", "value"],
                     AntdPassword_Helpers
                   ),
+                  onPressEnter: async event => {
+                    const $steps = {};
+                    $steps["updateInputValue"] = true
+                      ? (() => {
+                          const actionArgs = {
+                            variable: {
+                              objRoot: $state,
+                              variablePath: ["input", "value"]
+                            },
+                            operation: 0
+                          };
+                          return (({
+                            variable,
+                            value,
+                            startIndex,
+                            deleteCount
+                          }) => {
+                            if (!variable) {
+                              return;
+                            }
+                            const { objRoot, variablePath } = variable;
+                            $stateSet(objRoot, variablePath, value);
+                            return value;
+                          })?.apply(null, [actionArgs]);
+                        })()
+                      : undefined;
+                    if (
+                      $steps["updateInputValue"] != null &&
+                      typeof $steps["updateInputValue"] === "object" &&
+                      typeof $steps["updateInputValue"].then === "function"
+                    ) {
+                      $steps["updateInputValue"] = await $steps[
+                        "updateInputValue"
+                      ];
+                    }
+                  },
                   placeholder: "Your password",
                   value: generateStateValueProp($state, [
                     "passwordInput",
@@ -271,6 +345,32 @@ function PlasmicEvBox__RenderFunc(props) {
               </a>
               <AntdButton
                 className={classNames("__wab_instance", sty.button__kJyLw)}
+                onClick={async () => {
+                  const $steps = {};
+                  $steps["runCode"] = true
+                    ? (() => {
+                        const actionArgs = {
+                          customFunction: async () => {
+                            return console.log(
+                              $state.input,
+                              $state.passwordInput
+                            );
+                          }
+                        };
+                        return (({ customFunction }) => {
+                          return customFunction();
+                        })?.apply(null, [actionArgs]);
+                      })()
+                    : undefined;
+                  if (
+                    $steps["runCode"] != null &&
+                    typeof $steps["runCode"] === "object" &&
+                    typeof $steps["runCode"].then === "function"
+                  ) {
+                    $steps["runCode"] = await $steps["runCode"];
+                  }
+                }}
+                type={"default"}
               >
                 <div
                   className={classNames(

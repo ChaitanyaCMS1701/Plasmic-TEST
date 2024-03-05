@@ -840,6 +840,20 @@
           "cssFilePath": "plasmic/dtv_dev/PlasmicCartComponent3.module.css",
           "scheme": "blackbox",
           "componentType": "component"
+        },
+        {
+          "id": "X4VCr-8v9Rmc",
+          "name": "SignInForm",
+          "type": "managed",
+          "projectId": "sMuK5QvKwWGrkw9DYJKXqS",
+          "renderModuleFilePath": "plasmic/dtv_dev/PlasmicSignInForm.jsx",
+          "importSpec": {
+            "modulePath": "SignInForm.jsx"
+          },
+          "cssFilePath": "plasmic/dtv_dev/PlasmicSignInForm.module.css",
+          "scheme": "blackbox",
+          "componentType": "page",
+          "path": "/sign-in-form"
         }
       ],
       "icons": [
@@ -906,6 +920,12 @@
           "name": "Fetcher",
           "displayName": "plasmic-data-source-fetcher",
           "componentImportPath": "@plasmicapp/react-web/lib/data-sources"
+        },
+        {
+          "id": "1CzaQNSqdyvW",
+          "name": "Comp1CzaQnSqdyvW",
+          "displayName": "ProductCard",
+          "componentImportPath": ""
         }
       ],
       "customFunctions": []
